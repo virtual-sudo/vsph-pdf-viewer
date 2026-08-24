@@ -15,7 +15,7 @@ export default function ShareResult({ vanityUrl, tokenUrl }: ShareResultProps) {
 
   return (
     <div className="share-result">
-      <label>Pretty link</label>
+      <label>PDF link</label>
       <div className="row">
         <input readOnly value={pretty} />
         <button
@@ -27,8 +27,6 @@ export default function ShareResult({ vanityUrl, tokenUrl }: ShareResultProps) {
           Copy
         </button>
       </div>
-      <label>Token link</label>
-      <input readOnly value={tokenUrl || vanityUrl} />
       <label>Embed code</label>
       <div className="row">
         <textarea readOnly rows={3} value={embed} />
@@ -41,7 +39,6 @@ export default function ShareResult({ vanityUrl, tokenUrl }: ShareResultProps) {
           Copy
         </button>
       </div>
-     
     </div>
   );
 }
