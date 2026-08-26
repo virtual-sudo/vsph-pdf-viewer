@@ -1,6 +1,6 @@
 /**
  * Writes apps/shared/config.js for local/Netlify deploys.
- * Uses env vars; falls back to this project's Supabase URL when unset.
+ * Uses environment variables and refuses to generate an unauthenticated build.
  */
 const fs = require('fs');
 const path = require('path');

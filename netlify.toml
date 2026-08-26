@@ -1,8 +1,11 @@
 [build]
-  command = "npm install && npm run build:all"
+  command = "npm ci && npm run build:all"
   publish = "."
   functions = "netlify/functions"
   edge_functions = "netlify/edge-functions"
+
+[build.environment]
+  NODE_VERSION = "22.19.0"
 
 [functions]
   node_bundler = "esbuild"
