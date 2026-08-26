@@ -20,6 +20,8 @@ const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE
 const supabaseAnonKey =
   process.env.SUPABASE_ANON_KEY
   || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  || process.env.SUPABASE_PUBLISHABLE_KEY
+  || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
   || (localUiMode ? 'demo-anon-key' : '');
 
 let publicBaseUrl =
@@ -37,6 +39,12 @@ function fail(message) {
   process.exit(1);
 }
 
+console.log(
+  `[write-portal-config] mode=${localUiMode ? 'ui-demo' : 'production'} `
+  + `SUPABASE_URL=${supabaseUrl ? 'set' : 'missing'} `
+  + `browser-key=${supabaseAnonKey ? 'set' : 'missing'}`,
+);
+
 if (!localUiMode) {
   if (!supabaseUrl) {
     fail('SUPABASE_URL is required. Set it in .env for local builds or Netlify environment variables.');
@@ -52,6 +60,10 @@ if (!localUiMode) {
 
   if (supabaseUrl.includes('example.supabase.co') || supabaseAnonKey === 'demo-anon-key') {
     fail('Placeholder Supabase values are not allowed outside LOCAL_UI_MODE.');
+  }
+
+  if (supabaseAnonKey.startsWith('sb_secret_') || supabaseAnonKey.includes('service_role')) {
+    fail('A server-only Supabase key was supplied as the browser key. Use SUPABASE_ANON_KEY or SUPABASE_PUBLISHABLE_KEY.');
   }
 } else {
   console.warn('[write-portal-config] LOCAL_UI_MODE enabled - using demo values for UI editing.');
